@@ -1,8 +1,8 @@
+import React, { useState } from "react";
 import { StrictMode, useCallback, useRef, type CSSProperties } from 'react'
-import { createRoot } from 'react-dom/client'
-import './style.css'
+import { AuthProvider, useAuth } from '../auth_context';
 
-import Users from './users';
+import '../style.css'
 
 interface AudioProps {
   path: string
@@ -77,10 +77,63 @@ function AudioComponent({ path }: AudioProps) {
   );
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    {/* <Card content = "cool wiggly text :D" /> */}
-    <Users />
-    {/* <AudioComponent path = "./src/audio/test_audio.wav"/> */}
-  </StrictMode>
-)
+function Game() {
+
+  const { user } = useAuth();
+
+  const [score, setScore] = useState<number | null>(null);
+
+  // Submit a score to Postgres
+  async function handleSubmit(scoreToSubmit: number) {
+
+    if (!user) {
+      console.error('Create an account to submit scores!');
+      return;
+    }
+
+    try {
+
+      const user_id: number = user.id;
+
+      console.log('Submitting score:', user_id, scoreToSubmit);
+
+      const response = await fetch('http://localhost:3000/scores', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_id, score: scoreToSubmit })
+      });
+
+      const data: { error?: string } = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit score');
+      }
+
+      console.log('Score successfully added:', data);
+
+    } catch (error) {
+      console.error('Error submitting score:', error);
+    }
+  }
+  
+  const submitHandle = () => {
+    const newScore = Math.floor(Math.random() * 500);
+    setScore(newScore);
+    void handleSubmit(newScore);
+  };
+
+  return (
+    <StrictMode>
+      <Card content = "Daily Sound Design" />
+      <button onClick={submitHandle}>
+        SUBMIT!
+      </button>
+
+      <h2>Score: {score}</h2>
+    </StrictMode>
+  );
+}
+
+export default Game;

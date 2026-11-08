@@ -43,6 +43,26 @@ function Users() {
         fetchUsers();
     }, []);
 
+    // get a users total score
+    async function fetchTotalScore(userId: number) {
+        try {
+            const response = await fetch(
+                `http://localhost:3000/users/${userId}/total-score`
+            );
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch total score');
+            }
+
+            const data = await response.json();
+
+            console.log('Total score:', data.total_score);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     // Submit a new user
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -176,7 +196,7 @@ function Users() {
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             </form>
 
-            {/* Display users */}
+            {/* Display users */}z
             {users.map(user => (
                 <div key={user.id}>
                     {editingId === user.id ? (

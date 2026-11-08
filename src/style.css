@@ -1,0 +1,57 @@
+:root {
+  --height: 10px;
+  --wiggle-amount: 0.7;
+}
+
+body {
+    background-color: rgb(180, 206, 211);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh;
+    gap: 1px;
+}
+
+.wiggly-container {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+
+.wiggly-container span {
+    color: rgba(255, 255, 255, 0);
+    text-shadow: 0px 50px 5px rgba(0, 0, 0, 0);
+    display: inline-block;
+    animation: intro 0.3s ease-in-out calc(var(--i) * 0.1s) 1, wiggle 0.6s ease-in-out calc(var(--i) * 0.1s + 0.3s) infinite alternate;
+}
+
+.wiggly-container .space {
+    white-space: pre;
+}
+
+@keyframes intro {
+    0% {
+        transform: translateY(-60px);
+        text-shadow: 0px calc(var(--height) + 60px) 15px rgba(0, 0, 0, 0);
+    }
+    100% {
+        transform: translateY(0);
+        color: rgb(229, 128, 232);
+        text-shadow: 0px var(--height) 5px rgba(0, 0, 0, 0.6);
+    }
+}
+
+@keyframes wiggle {
+    0% {
+        transform: translateY(0);
+        color: rgb(229, 128, 232);
+        text-shadow: 0px calc(var(--height) * var(--wiggle-amount)) 5px rgba(0, 0, 0, 0.6);
+    }
+    100% {
+        transform: translateY(calc(-8px * var(--wiggle-amount)));
+        color: rgb(255, 223, 252);
+        text-shadow: 0px calc((var(--height) + 8px) * var(--wiggle-amount)) 7px rgba(0, 0, 0, 0.8);
+    }
+}

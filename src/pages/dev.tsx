@@ -1,10 +1,14 @@
 import React from "react";
+import Users from '../users';
 
 import '../style.css'
 
 function Dev() {
   return (
-    <p>Dev Stuff</p>
+    <main>  
+      <p>Dev Stuff</p>
+      <Users />
+    </main>
   );
 }
 

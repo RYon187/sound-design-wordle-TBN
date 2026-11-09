@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import '../style.css'
 
@@ -19,7 +20,8 @@ interface DailyScoreInfo {
 function TotalScoreCard({ scoreInfo }: { scoreInfo: TotalScoreInfo }) {
   return (
     <div>
-      {scoreInfo.username} has scored {scoreInfo.total_score} over {scoreInfo.num_submissions} submissions
+      <Link to={`/profile/${scoreInfo.user_id}`}>{scoreInfo.username}</Link>
+      {' has scored '}{scoreInfo.total_score} over {scoreInfo.num_submissions} submissions
     </div>
   );
 }
@@ -27,7 +29,8 @@ function TotalScoreCard({ scoreInfo }: { scoreInfo: TotalScoreInfo }) {
 function DailyScoreCard({ scoreInfo }: { scoreInfo: DailyScoreInfo }) {
   return (
     <div>
-      {scoreInfo.username} scored {scoreInfo.score} today
+      <Link to={`/profile/${scoreInfo.user_id}`}>{scoreInfo.username}</Link>
+      {' scored '}{scoreInfo.score} today
     </div>
   );
 }

@@ -5,11 +5,8 @@
 
 body {
     background-color: rgb(19, 22, 22);
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    height: 100vh;
-    gap: 1px;
+    min-height: 100vh;
+    margin: 0;
     color: rgb(248, 191, 255);
 }
 
@@ -58,6 +55,11 @@ body {
 }
 
 .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -84,4 +86,18 @@ body {
 
 .navbar a:hover {
     color: #aaa;
+}
+
+.user-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.user-row > * {
+    flex-shrink: 0;
 }

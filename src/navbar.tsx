@@ -11,7 +11,7 @@ export const Navbar = () => {
         <Link to="/leaderboards">Leaderboards</Link>
 
         {user && (
-          <Link to="/dev">Dev Stats</Link>
+          <Link to="/dev">Dev</Link>
         )}
       </div>
 
@@ -21,7 +21,7 @@ export const Navbar = () => {
             {user.username}
           </Link>
         ) : (
-          <Link to="/login">Log In</Link>
+          <Link to="/login">Sign In</Link>
         )}
       </div>
     </nav>

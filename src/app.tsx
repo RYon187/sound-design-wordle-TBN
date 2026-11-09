@@ -29,9 +29,10 @@ function App() {
           <Route path="/" element={<Game />} />
           <Route path="/leaderboards" element={<Leaderboards />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
 
           <Route element={<ProtectedRoute />}>
-            <Route path="/profile" element={<Profile />} />
             <Route path="/dev" element={<Dev />} />
           </Route>
         </Routes>

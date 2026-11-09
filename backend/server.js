@@ -57,6 +57,37 @@ app.get('/users', async (req, res) => {
     }
 });
 
+// GET public profile details
+app.get('/users/:id/profile', async (req, res) => {
+    try {
+        const id = Number(req.params.id);
+
+        if (!Number.isInteger(id) || id <= 0) {
+            return res.status(400).json({
+                error: 'Invalid user ID'
+            });
+        }
+
+        const result = await pool.query(
+            'SELECT user_id, username FROM users WHERE user_id = $1',
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                error: 'User not found'
+            });
+        }
+
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error('Error fetching profile:', error.message);
+        res.status(500).json({
+            error: 'Failed to retrieve profile'
+        });
+    }
+});
+
 // GET users total score
 app.get('/users/:id/total-score', async (req, res) => {
     try {

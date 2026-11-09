@@ -3,7 +3,7 @@ import type { FormEvent, ChangeEvent } from 'react';
 
 // Define the structure of a user returned by PostgreSQL
 interface User {
-    id: number;
+    user_id: number;
     username: string;
     email: string;
     created_at: string;
@@ -117,7 +117,7 @@ function Users() {
             }
 
             setUsers(prevUsers =>
-                prevUsers.filter(user => user.id !== id)
+                prevUsers.filter(user => user.user_id !== id)
             );
 
         } catch (error) {
@@ -150,7 +150,7 @@ function Users() {
             // Replace the old user with the updated user
             setUsers(prevUsers =>
                 prevUsers.map(user =>
-                    user.id === id ? data.updatedUser : user
+                    user.user_id === id ? data.updatedUser : user
                 )
             );
 
@@ -196,12 +196,11 @@ function Users() {
                 {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             </form>
 
-            {/* Display users */}z
+            {/* Display users */}
             {users.map(user => (
-                <div key={user.id}>
-                    {editingId === user.id ? (
-                        // EDITING MODE
-                        <div>
+                <div className="user-row" key={user.user_id}>
+                    {editingId === user.user_id ? (
+                        <>
                             <input
                                 type="text"
                                 value={editedUsername}
@@ -210,34 +209,36 @@ function Users() {
                                 }
                             />
 
-                            <button onClick={() => handleUpdate(user.id)}>
+                            <span>--</span>
+                            <span>{user.email}</span>
+                            <button type="button" onClick={() => handleUpdate(user.user_id)}>
                                 Save
                             </button>
 
-                            <button onClick={() => {
+                            <button type="button" onClick={() => {
                                 setEditingId(null);
                                 setEditedUsername('');
                             }}>
                                 Cancel
                             </button>
-                        </div>
+                        </>
                     ) : (
-                        // NORMAL MODE
-                        <div>
-                            <h3>{user.username}</h3>
-                            <p>{user.email}</p>
+                        <>
+                            <span>{user.username}</span>
+                            <span>--</span>
+                            <span>{user.email}</span>
 
-                            <button onClick={() => {
-                                setEditingId(user.id);
+                            <button type="button" onClick={() => {
+                                setEditingId(user.user_id);
                                 setEditedUsername(user.username);
                             }}>
-                                Edit
+                                EDIT
                             </button>
 
-                            <button onClick={() => handleDelete(user.id)}>
-                                Delete
+                            <button type="button" onClick={() => handleDelete(user.user_id)}>
+                                DELETE
                             </button>
-                        </div>
+                        </>
                     )}
                 </div>
             ))}
